@@ -1,0 +1,157 @@
+<html>
+    <head></head>
+    <body>
+    <div id="slider" class="slides">
+      <div>slide number 1</div>
+      <div>slide number 2</div>
+      <div>slide number 3</div>
+      <div>slide number 4</div>
+<!--increase the slides-->
+    </div>
+        <br>
+<div id="dragcon" class="dragcon">Drag here !</div>
+    <style>
+        .slides {
+            scrollbar-color: transparent transparent;/*hide scroll*/
+            overflow-y: hidden;
+            overflow-x: scroll;
+            width: 330px;/*try other width ex: 530 */
+            padding: 30px 0px;
+          background: #f2f2f2;
+            display: flex;
+/*          scroll-snap-type: x mandatory;*/
+/*          scroll-snap-type: x proximity;*/
+        }
+
+        .slides > div {
+            flex-shrink: 0;
+            margin: 5px;
+            height: 100px;
+          background: black;
+          color: white;
+          width: 200px;
+          scroll-snap-align: center;
+          text-align: center;
+        }
+        .slides>div::selection {
+  color: white;
+  background: transparent;
+}
+        .dragcon{
+            width: 100px;
+            height: 100px;
+            background-color: #f0f0f0;
+        }
+        .dragcon>div{
+            width: 100px;
+            height: 50px;
+            background-color: #000000;
+        }
+    </style>
+    </body>
+    <script>
+        const slider = document.getElementById("slider");
+        const dragcon = document.getElementById("dragcon");
+        let drag;
+        slider.ondrop=(e)=>{
+             e.preventDefault();
+           // const data = e.dataTransfer.getData("slide");
+            slider.appendChild(drag)//document.getElementById(data)
+            
+        }
+        slider.ondragover=(e)=>{
+             e.preventDefault();
+        }
+        dragcon.ondrop=(e)=>{
+             e.preventDefault();
+            dragcon.style.backgroundColor="#00fa00";
+           // const data = e.dataTransfer.getData("slide");
+            dragcon.appendChild(drag)//document.getElementById(data)
+            
+        }
+        dragcon.ondragover=(e)=>{
+             e.preventDefault();
+        }
+        for(let slide of slider.children){
+            
+            slide.ondragstart=(e)=>{
+        e.target.style.color="#00fa00";
+                //drag=e.target.cloneNode(true)//to get copy of the slide
+                drag=e.target;
+               // e.dataTransfer.setData("slide", e.target.id);
+            }
+            slide.ondrag=()=>{
+                
+            }
+            
+            slide.onmousedown=(e)=>{
+             
+                setTimeout(()=>{e.target.setAttribute("draggable","true");},100);
+                
+            }
+            slide.onmouseup=(e)=>{
+             
+                e.target.setAttribute("draggable","false");e.target.style.color="#ffffff";
+       
+            }
+            slide.onblur=(e)=>{
+           
+                e.target.setAttribute("draggable","false");e.target.style.color="#ffffff";
+            
+            }
+            slide.onmouseleave =(e)=>{
+           
+               e.target.setAttribute("draggable","false");e.target.style.color="#ffffff";
+                
+            }
+        }
+        
+        var slidertouch=false
+        var lastpos=0;
+        var immpos=0;
+        var moveby=5;//speed of touch
+        var wheelmoveby = 50;//speed of wheel
+        slider.onmousedown=(e)=>{
+            slidertouch=true
+            
+        }
+        slider.onmouseup=()=>{
+            slidertouch=false
+         
+        }
+        slider.onblur=()=>{
+            slidertouch=false
+     
+        }
+        slider.onmouseleave =()=>{
+            slidertouch=false
+     
+        }
+        slider.onmousemove=(e)=>{
+            if(slidertouch){
+                lastpos=immpos;
+                immpos=e.x;
+
+                if((lastpos-immpos)<0){ // change < to > (reversed)
+                    slider.scrollBy(-moveby, 0);
+                }else{
+                    slider.scrollBy(moveby, 0);
+                }
+
+                console.log(lastpos,immpos,"/",e.x)
+            }
+        }
+        slider.onmousewheel=(e)=>{
+
+            if(e.wheelDelta>0){ // change < to > (reversed)
+                slider.scrollBy(-wheelmoveby, 0);
+            }else{
+                slider.scrollBy(wheelmoveby, 0);
+            }
+
+            console.log(e.wheelDelta,"/",e.x)
+
+        }
+
+    </script>
+</html>
