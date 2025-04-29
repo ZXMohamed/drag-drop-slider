@@ -1,0 +1,8 @@
+<h1>drag-drop-slider</h1>
+<h3>a 3 Methods for JS slider that allow to drag and drop it's slides</h3>
+<h3><u><i>I made this project as answr for a question on stackoverflow about how to move a slide with a mouse on pc and on phone by touch</i></u></h3>
+<br>
+<h4>Link</h4>
+<a href=""></a>
+<h4>Stackoverflow</h4>
+<a href="https://stackoverflow.com/questions/79331271/how-do-i-move-a-slide-with-a-mouse-and-on-my-phone/79334393#79334393">stackoverflow question</a>
